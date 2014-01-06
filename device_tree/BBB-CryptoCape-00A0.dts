@@ -1,0 +1,51 @@
+/dts-v1/;
+/plugin/;
+
+/ {
+    compatible = "ti,beaglebone", "ti,beaglebone-black";
+
+    part-number = "BBB-CryptoCape";
+    version = "00A0";
+    exclusive-use =
+        "uart5",
+        "i2c1";
+    fragment@0 {
+        target = <&am33xx_pinmux>;
+        __overlay__{
+            bb_uart5_pins: pinmux_bb_uart5_pins {
+                pinctrl-single,pins = <
+               0xc4 0x24
+               0xc0 0x04
+               /*0x04 0x07*/
+                >;
+           };
+        };
+    };
+    fragment@1 {
+        target = <&uart6>;
+        __overlay__{
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bb_uart5_pins>;
+        };
+    };
+    fragment@2 {
+        target = <&am33xx_pinmux>;
+        __overlay__{
+            bb_i2c1_pins: pinmux_bb_i2c1_pins {
+                pinctrl-single,pins = <
+               0x158 0x72
+               0x15c 0x72
+                >;
+           };
+        };
+    };
+    fragment@3 {
+        target = <&i2c1>;
+        __overlay__{
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <&bb_i2c1_pins>;
+        };
+    };
+};
