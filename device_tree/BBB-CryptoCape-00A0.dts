@@ -7,6 +7,7 @@
     part-number = "BBB-CryptoCape";
     version = "00A0";
     exclusive-use =
+        "P9.23",
         "uart5",
         "i2c1";
     fragment@0 {
@@ -14,15 +15,14 @@
         __overlay__{
             bb_uart5_pins: pinmux_bb_uart5_pins {
                 pinctrl-single,pins = <
-               0xc4 0x24
-               0xc0 0x04
-               /*0x04 0x07*/
+                0x070 0x26  /* P9_11 = GPIO0_30 = GPMC_WAIT0 , MODE6 */
+                0x074 0x06  /* P9_13 = GPIO0_31 = GPMC_WPN, MODE6 */
                 >;
            };
         };
     };
     fragment@1 {
-        target = <&uart6>;
+        target = <&uart5>;
         __overlay__{
             status = "okay";
             pinctrl-names = "default";
